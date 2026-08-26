@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Complaints - CivicCare</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f2f7f5;
+        }
+
+        header {
+            background: #087f5b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #087f5b;
+            text-align: center;
+        }
+
+        .complaint {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        .complaint h3 {
+            margin-top: 0;
+            color: #087f5b;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .progress {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .resolved {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .escalated {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #087f5b;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏙️ CivicCare</h1>
+    <p>My Complaint Tracking</p>
+</header>
+
+<div class="container">
+
+    <h2>📋 My Complaints</h2>
+
+    <div class="complaint">
+
+        <h3>Complaint ID: CIV-1001</h3>
+
+        <p><strong>Issue:</strong> Garbage / Waste</p>
+
+        <p><strong>Location:</strong> Tirupati</p>
+
+        <p><strong>Date:</strong> 26 August 2026</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="status pending">🟡 Pending</span>
+        </p>
+
+    </div>
+
+    <div class="complaint">
+
+        <h3>Complaint ID: CIV-1002</h3>
+
+        <p><strong>Issue:</strong> Pothole</p>
+
+        <p><strong>Location:</strong> Tirupati</p>
+
+        <p><strong>Date:</strong> 25 August 2026</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="status progress">🟠 In Progress</span>
+        </p>
+
+    </div>
+
+    <div class="complaint">
+
+        <h3>Complaint ID: CIV-1003</h3>
+
+        <p><strong>Issue:</strong> Broken Streetlight</p>
+
+        <p><strong>Location:</strong> Tirupati</p>
+
+        <p><strong>Date:</strong> 20 August 2026</p>
+
+        <p>
+            <strong>Status:</strong>
+            <span class="status resolved">🟢 Resolved</span>
+        </p>
+
+    </div>
+
+    <button onclick="newComplaint()">
+        📸 Report a New Issue
+    </button>
+
+</div>
+
+<script>
+
+function newComplaint() {
+    alert("You can report a new civic issue.");
+}
+
+</script>
+
+</body>
+</html>
