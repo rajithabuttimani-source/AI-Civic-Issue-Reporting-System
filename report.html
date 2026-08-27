@@ -93,9 +93,17 @@
 
 </div>
 
-<script>
+<script type="module">
+import { db } from "./firebase.js";
 
-function getLocation() {
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+window.getLocation = function () {
 
     if (navigator.geolocation) {
 
@@ -111,17 +119,60 @@ function getLocation() {
 
     } else {
 
-        alert("Location is not supported by this browser.");
+        alert("Location is not supported by your browser.");
 
     }
-}
+};
 
-function submitComplaint() {
 
-    alert("Complaint submitted successfully! 🎉");
+window.submitComplaint = async function () {
 
-}
+    const issueType = document.querySelector("select").value;
+    const description = document.querySelector("textarea").value;
+    const location = document.getElementById("location").value;
 
+
+    if (issueType === "Select Issue") {
+        alert("Please select an issue type.");
+        return;
+    }
+
+    if (description === "") {
+        alert("Please describe the problem.");
+        return;
+    }
+
+    if (location === "") {
+        alert("Please get your location.");
+        return;
+    }
+
+
+    try {
+
+        await addDoc(collection(db, "Complaints"), {
+
+            issueType: issueType,
+            description: description,
+            location: location,
+            status: "Pending",
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            createdAt: serverTimestamp()
+
+        });
+
+        alert("✅ Complaint submitted successfully!");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("❌ Complaint could not be submitted.");
+
+    }
+
+};
 </script>
 
 </body>
