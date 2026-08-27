@@ -92,55 +92,9 @@
 
     <h2>📋 My Complaints</h2>
 
-    <div class="complaint">
-
-        <h3>Complaint ID: CIV-1001</h3>
-
-        <p><strong>Issue:</strong> Garbage / Waste</p>
-
-        <p><strong>Location:</strong> Tirupati</p>
-
-        <p><strong>Date:</strong> 26 August 2026</p>
-
-        <p>
-            <strong>Status:</strong>
-            <span class="status pending">🟡 Pending</span>
-        </p>
-
-    </div>
-
-    <div class="complaint">
-
-        <h3>Complaint ID: CIV-1002</h3>
-
-        <p><strong>Issue:</strong> Pothole</p>
-
-        <p><strong>Location:</strong> Tirupati</p>
-
-        <p><strong>Date:</strong> 25 August 2026</p>
-
-        <p>
-            <strong>Status:</strong>
-            <span class="status progress">🟠 In Progress</span>
-        </p>
-
-    </div>
-
-    <div class="complaint">
-
-        <h3>Complaint ID: CIV-1003</h3>
-
-        <p><strong>Issue:</strong> Broken Streetlight</p>
-
-        <p><strong>Location:</strong> Tirupati</p>
-
-        <p><strong>Date:</strong> 20 August 2026</p>
-
-        <p>
-            <strong>Status:</strong>
-            <span class="status resolved">🟢 Resolved</span>
-        </p>
-
+    <!-- Firebase complaints will appear here -->
+    <div id="complaintsList">
+        <p style="text-align:center;">Loading complaints...</p>
     </div>
 
     <button onclick="newComplaint()">
@@ -149,11 +103,132 @@
 
 </div>
 
-<script>
 
-function newComplaint() {
-    alert("You can report a new civic issue.");
-}
+<script type="module">
+
+    import { db } from "./firebase.js";
+
+    import {
+        collection,
+        getDocs
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+    const complaintsList = document.getElementById("complaintsList");
+
+
+    async function loadComplaints() {
+
+        try {
+
+            const querySnapshot =
+                await getDocs(collection(db, "complaints"));
+
+            complaintsList.innerHTML = "";
+
+
+            if (querySnapshot.empty) {
+
+                complaintsList.innerHTML =
+                    "<p style='text-align:center;'>No complaints found.</p>";
+
+                return;
+            }
+
+
+            querySnapshot.forEach((doc) => {
+
+                const complaint = doc.data();
+
+                const issue =
+                    complaint.issue || "Civic Issue";
+
+                const location =
+                    complaint.location || "Location not available";
+
+                const status =
+                    complaint.status || "Pending";
+
+
+                let statusClass = "pending";
+                let statusIcon = "🟡";
+
+
+                if (status === "In Progress") {
+
+                    statusClass = "progress";
+                    statusIcon = "🟠";
+
+                } else if (status === "Resolved") {
+
+                    statusClass = "resolved";
+                    statusIcon = "🟢";
+
+                } else if (status === "Escalated") {
+
+                    statusClass = "escalated";
+                    statusIcon = "🔴";
+
+                }
+
+
+                const complaintBox =
+                    document.createElement("div");
+
+                complaintBox.className = "complaint";
+
+
+                complaintBox.innerHTML = `
+
+                    <h3>
+                        Complaint ID: ${doc.id}
+                    </h3>
+
+                    <p>
+                        <strong>Issue:</strong>
+                        ${issue}
+                    </p>
+
+                    <p>
+                        <strong>Location:</strong>
+                        ${location}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span class="status ${statusClass}">
+                            ${statusIcon} ${status}
+                        </span>
+                    </p>
+
+                `;
+
+
+                complaintsList.appendChild(complaintBox);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            complaintsList.innerHTML =
+                "<p style='text-align:center;color:red;'>Unable to load complaints.</p>";
+
+        }
+
+    }
+
+
+    loadComplaints();
+
+
+    window.newComplaint = function() {
+
+        window.location.href = "report.html";
+
+    };
 
 </script>
 
