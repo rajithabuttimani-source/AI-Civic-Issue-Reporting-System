@@ -68,7 +68,7 @@
 <div class="form-box">
 
     <label>📸 Upload Photo</label>
-    <input type="file" accept="image/*">
+    
 
     <label>🏷️ Issue Type</label>
     <select>
@@ -80,6 +80,7 @@
         <option>Open Drain</option>
         <option>Other</option>
     </select>
+    <input type="file" id="photo" accept="image/*" capture="environment" style="display:block; width:100%; padding:10px; margin-top:10px;">
 
     <label>📝 Description</label>
     <textarea placeholder="Describe the problem..."></textarea>
